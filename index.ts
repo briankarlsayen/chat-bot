@@ -4,11 +4,18 @@ import cors from 'cors';
 import http from 'http';
 dotenv.config();
 import { AI21 } from 'langchain/llms/ai21';
+import { RetrievalQAChain } from 'langchain/chains'
+import { HNSWLib } from 'langchain/vectorstores'
+import { HuggingFaceInference } from "langchain/llms/hf";
 
 console.log('d', process.env.AI21_KEY);
-const llm = new AI21({
-  ai21ApiKey: process.env.AI21_KEY,
-  temperature: 0.9,
+// const llm = new AI21({
+//   ai21ApiKey: process.env.AI21_KEY,
+//   temperature: 0.9,
+// });
+const llm = new HuggingFaceInference({
+  model: "microsoft/DialoGPT-medium",
+  apiKey: process.env.HF_KEY
 });
 
 const app: Express = express();
